@@ -1,0 +1,35 @@
+name: Push to EC2
+
+on:
+  push:
+    branches:
+      - '**' # Aciona o pipeline para qualquer branch (todas as branches)
+
+jobs:
+  deploy:
+    name: Deploy to EC2
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the files
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16' # Versão do Node.js que você deseja usar
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Compile TypeScript
+      run: npx tsc # Compila o código TypeScript usando o compilador `tsc`
+
+    - name: Copy files with SSH
+      uses: easingthemes/ssh-deploy@main
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+        SOURCE: "./dist" # Pasta gerada após a compilação do TypeScript
+        REMOTE_HOST: "ec2-54-152-36-108.compute-1.amazonaws.com"
+        REMOTE_USER: "ec2-user"
+        TARGET: "/home/ec2-user/app" # Diretório no servidor EC2 onde os arquivos serão copiados

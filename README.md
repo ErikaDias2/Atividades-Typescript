@@ -1,1 +1,1 @@
-# Atividades-Typescript
+Hello from inside the EC2
