@@ -47,9 +47,6 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           ARGS: "-rltgoDzvo --delete"
           SOURCE: "./"
-          REMOTE_HOST: "ec2-18-212-18-252.compute-1.amazonaws.com"
+          REMOTE_HOST: "ec2-13-216-63-207.compute-1.amazonaws.com
           REMOTE_USER: "ec2-user"
           TARGET: "home/ec2-user"
-        run: |
-          echo "Testando conexão SSH..."
-          ssh -v -i ~/.ssh/deploy_key_ec2-user_1742552916640 ec2-user@ec2-18-212-18-252.compute-1.amazonaws.com
